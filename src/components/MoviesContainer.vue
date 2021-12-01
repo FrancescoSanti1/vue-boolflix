@@ -6,28 +6,41 @@
         </div>
         
         <div class="movies-container">
-            <Movie
-                v-for="movie, i in apiResponse"
-                :key="i"
-                :movieDetails="movie"
+            <Item
+                v-for="movie in moviesApiResponse"
+                :key="movie.id"
+                :title="movie.title"
+                :originalTitle="movie.original_title"
+                :language="movie.original_language"
+                :rating="movie.vote_average"
+            />
+
+            <Item
+                v-for="series in seriesApiResponse"
+                :key="series.id"
+                :title="series.name"
+                :originalTitle="series.original_name"
+                :language="series.original_language"
+                :rating="series.vote_average"
             />
         </div>
     </div>
 </template>
 
 <script>
-import Movie from '@/components/Movie.vue'
+import Item from '@/components/Item.vue'
 import axios from 'axios'
 
 export default {
     name: 'MoviesContainer',
     components: {
-        Movie
+        Item,
     },
     data() {
         return {
             stringToSearch: "",
-            apiResponse: []
+            moviesApiResponse: [],
+            seriesApiResponse: []
         }
     },
     methods: {
@@ -35,8 +48,15 @@ export default {
             axios
             .get(`https://api.themoviedb.org/3/search/movie?api_key=f98ea4f4b78ab3a6de36168ebf417712&language=it-IT&query=${this.stringToSearch}`)
             .then(response => {
-                this.apiResponse = response.data.results;
-                console.log(this.apiResponse);
+                this.moviesApiResponse = response.data.results;
+                console.log(this.moviesApiResponse);
+            });
+
+            axios
+            .get(`https://api.themoviedb.org/3/search/tv?api_key=f98ea4f4b78ab3a6de36168ebf417712&language=it-IT&query=${this.stringToSearch}`)
+            .then(response => {
+                this.seriesApiResponse = response.data.results;
+                console.log(this.seriesApiResponse);
             });
         }
     }
