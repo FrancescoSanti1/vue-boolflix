@@ -1,12 +1,18 @@
 <template>
     <div class="movie">
-
+        <div>Titolo: {{movieDetails.title}}</div>
+        <div>Titolo originale: {{movieDetails.original_title}}</div>
+        <div>Lingua: {{movieDetails.original_language}}</div>
+        <div>Voto: {{movieDetails.vote_average}}</div>
     </div>
 </template>
 
 <script>
 export default {
     name: 'Movie',
+    props: {
+        movieDetails: Object
+    }
 }
 </script>
 

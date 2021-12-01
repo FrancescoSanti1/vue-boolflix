@@ -1,29 +1,44 @@
 <template>
     <div class="container">
         <div id="search">
-            <input type="text" placeholder="scrivi qui cosa vuoi cercare...">
-            <button>Cerca</button>
+            <input v-model="stringToSearch" @focus="stringToSearch = ''" type="text" placeholder="scrivi qui cosa vuoi cercare...">
+            <button @click="searchMovies">Cerca</button>
         </div>
         
         <div class="movies-container">
-            <Movie/>
-            <Movie/>
-            <Movie/>
-            <Movie/>
-            <Movie/>
-            <Movie/>
-            <Movie/>
+            <Movie
+                v-for="movie, i in apiResponse"
+                :key="i"
+                :movieDetails="movie"
+            />
         </div>
     </div>
 </template>
 
 <script>
 import Movie from '@/components/Movie.vue'
+import axios from 'axios'
 
 export default {
     name: 'MoviesContainer',
     components: {
         Movie
+    },
+    data() {
+        return {
+            stringToSearch: "",
+            apiResponse: []
+        }
+    },
+    methods: {
+        searchMovies() {
+            axios
+            .get(`https://api.themoviedb.org/3/search/movie?api_key=f98ea4f4b78ab3a6de36168ebf417712&language=it-IT&query=${this.stringToSearch}`)
+            .then(response => {
+                this.apiResponse = response.data.results;
+                console.log(this.apiResponse);
+            });
+        }
     }
 }
 </script>
