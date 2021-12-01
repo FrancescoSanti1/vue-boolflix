@@ -1,0 +1,31 @@
+<template>
+    <header>
+        <div id="logo">
+            Boolflix
+        </div>
+    </header>
+</template>
+
+<script>
+export default {
+    name: 'Header',
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped lang="scss">
+
+header {
+    background-color: black;
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+
+    #logo {
+        font-size: 30px;
+        color: red;
+    }
+}
+</style>
