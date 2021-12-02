@@ -11,6 +11,7 @@
                 :rating="movie.vote_average"
                 :posterPath="movie.poster_path"
                 :textOverview="movie.overview"
+                :cast="movie.castList"
             />
 
             <Item

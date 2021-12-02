@@ -26,7 +26,7 @@ export default {
     data() {
         return {
             moviesApiResponse: [],
-            seriesApiResponse: []
+            seriesApiResponse: [],
         }
     },
     methods: {
@@ -35,8 +35,12 @@ export default {
             axios
             .get(`https://api.themoviedb.org/3/search/movie?api_key=f98ea4f4b78ab3a6de36168ebf417712&language=it-IT&query=${stringToSearch}`)
             .then(response => {
+
                 this.moviesApiResponse = response.data.results;
                 console.log(this.moviesApiResponse);
+
+                // una volta popolato l'array con i film trovati, invoco la funzione per chiedere la lista degli attori
+                this.searchCast();
             });
 
             axios
@@ -44,6 +48,23 @@ export default {
             .then(response => {
                 this.seriesApiResponse = response.data.results;
                 console.log(this.seriesApiResponse);
+            });
+        },
+        searchCast() {
+            this.moviesApiResponse.forEach(movie => {
+                
+                axios
+                .get(`https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=f98ea4f4b78ab3a6de36168ebf417712`)
+                .then(response => {
+
+                    let movieToUpdate = this.moviesApiResponse.find(film => {
+                        return film.id === response.data.id
+                    });
+                    movieToUpdate.castList = response.data.cast;
+                    // movie.castList = response.data.cast;
+                }); 
+
+                console.log("array di film con cast aggiunto:", this.moviesApiResponse);
             });
         }
     }

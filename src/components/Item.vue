@@ -3,13 +3,18 @@
         <img class="poster" :src="imagePath" :alt="`locandina ${title}`">
         <div class="item-infos">
             <div><span class="bold">Titolo</span>: {{title}}</div>
-            <div><span class="bold">Titolo originale</span>: {{originalTitle}}</div>
+            <div v-if="originalTitle !== title"><span class="bold">Titolo originale</span>: {{originalTitle}}</div>
             <div class="flag"><span class="bold">Lingua</span>:
                 <img :src="flagPath" :alt="language">
                 {{language}}
             </div>
-            <div><span class="bold">Voto</span>:
+            <div>
+                <span class="bold">Voto</span>:
                 <div v-for="star in 5" :key="star" :class="activeStar(star)" class="star"></div>
+            </div>
+            <div>
+                <span class="bold">Cast</span>:
+                <span v-for="actor in castToPrintOnPage" :key="actor">{{actor}} </span>
             </div>
             <div>
                 <span class="bold">Trama</span>:
@@ -28,7 +33,8 @@ export default {
         language: String,
         rating: Number,
         posterPath: String,
-        textOverview: String
+        textOverview: String,
+        cast: Array
     },
     computed: {
         ratingStars() {
@@ -47,6 +53,25 @@ export default {
             } else {
                 return require(`@/assets/img/xx.svg`);
             }
+        },
+        castToPrintOnPage() {
+            if(this.cast) {
+                console.log("array con la lista degli attori:", this.cast);
+                let newList = [];
+                for(let i = 0; i < 5; i++) {
+                    console.log("questo è l'attore di posto", i, this.cast[i]);
+                    newList.push(this.cast[i].original_name);
+                }
+                return newList;
+            } else {
+                return '';
+            }
+            // let newList = [];
+            // for(let i = 0; i < 5; i++) {
+            //     console.log("array con la lista degli attori:", this.cast);
+            //     newList.push(this.cast[i].original_name);
+            // }
+            // return newList;
         }
     },
     methods: {
