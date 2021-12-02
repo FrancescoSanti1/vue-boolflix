@@ -13,6 +13,7 @@
                 :originalTitle="movie.original_title"
                 :language="movie.original_language"
                 :rating="movie.vote_average"
+                :posterPath="movie.poster_path"
             />
 
             <Item
@@ -22,6 +23,7 @@
                 :originalTitle="series.original_name"
                 :language="series.original_language"
                 :rating="series.vote_average"
+                :posterPath="series.poster_path"
             />
         </div>
     </div>
