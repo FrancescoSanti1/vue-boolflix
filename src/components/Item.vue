@@ -1,14 +1,20 @@
 <template>
     <div class="item">
-        <img class="poster" :src="`https://image.tmdb.org/t/p/w342${posterPath}`" :alt="`locandina ${title}`">
-        <div>Titolo: {{title}}</div>
-        <div>Titolo originale: {{originalTitle}}</div>
-        <div class="flag">Lingua: 
-            <img :src="imagePath" :alt="language">
-            {{language}}
-        </div>
-        <div>Voto: 
-            <div v-for="star in 5" :key="star" :class="activeStar(star)" class="circle"></div>
+        <img class="poster" :src="imagePath" :alt="`locandina ${title}`">
+        <div class="item-infos">
+            <div><span class="bold">Titolo</span>: {{title}}</div>
+            <div><span class="bold">Titolo originale</span>: {{originalTitle}}</div>
+            <div class="flag"><span class="bold">Lingua</span>:
+                <img :src="flagPath" :alt="language">
+                {{language}}
+            </div>
+            <div><span class="bold">Voto</span>:
+                <div v-for="star in 5" :key="star" :class="activeStar(star)" class="star"></div>
+            </div>
+            <div>
+                <span class="bold">Trama</span>:
+                {{textOverview}}
+            </div>
         </div>
     </div>
 </template>
@@ -21,13 +27,21 @@ export default {
         originalTitle: String,
         language: String,
         rating: Number,
-        posterPath: String
+        posterPath: String,
+        textOverview: String
     },
     computed: {
         ratingStars() {
             return Math.ceil(this.rating / 2);
         },
         imagePath() {
+            if(this.posterPath !== null) {
+                return `https://image.tmdb.org/t/p/w342${this.posterPath}`;
+            } else {
+                return `https://unsplash.it/300/500?image=10`;
+            }
+        },
+        flagPath() {
             if(this.language == "it" || this.language == "en") {
                 return require(`@/assets/img/${this.language}.svg`);
             } else {
@@ -53,32 +67,64 @@ export default {
 .item {
     width: 23%;
     margin: 0 2% 30px 0;
-    // height: 300px;
+    border: lightgray 1px solid;
+    height: 500px;
+    overflow: hidden;
+    position: relative;
+
+    &:hover {
+        .item-infos {
+            display: block;
+        }
+    }
 
     .poster {
         width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 
-    .flag {
-        img {
-            height: 14px;
-            vertical-align: middle;
+    .item-infos {
+
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        padding: 20px 5px 10px;
+        background-color: rgba(0, 0, 0, 0.8);
+        color: white;
+        display: none;
+
+        div {
+            margin-bottom: 5px;
         }
-    }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        .flag {
+            img {
+                height: 14px;
+                vertical-align: middle;
+            }
+        }
     
-    .circle {
-        display: inline-block;
-        height: 18px;
-        width: 18px;
-        clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-        vertical-align: middle;
-        border-radius: 50%;
-        margin: 0 2px;
-        background-color: lightgrey;
+        .star {
+            display: inline-block;
+            height: 18px;
+            width: 18px;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            vertical-align: middle;
+            border-radius: 50%;
+            margin: 0 2px;
+            background-color: lightgrey;
 
-        &.active {
-            background-color: gold;
+            &.active {
+                background-color: gold;
+            }
         }
-    }
+    }  
 }
 </style>

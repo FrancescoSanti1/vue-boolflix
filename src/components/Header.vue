@@ -3,12 +3,22 @@
         <div id="logo">
             Boolflix
         </div>
+
+        <div id="search">
+            <input v-model="stringToSearch" @focus="stringToSearch = ''" type="text" placeholder="scrivi qui cosa vuoi cercare...">
+            <button @click="$emit('searchString', stringToSearch)">Cerca</button>
+        </div>
     </header>
 </template>
 
 <script>
 export default {
     name: 'Header',
+    data() {
+        return {
+            stringToSearch: ""
+        }
+    }
 }
 </script>
 
@@ -26,6 +36,18 @@ header {
     #logo {
         font-size: 30px;
         color: red;
+    }
+
+    #search {
+
+        input {
+            width: 200px;
+            margin: 0 10px;
+        }
+
+        button {
+            padding: 0 5px;
+        }
     }
 }
 </style>
