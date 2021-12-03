@@ -55,23 +55,15 @@ export default {
             }
         },
         castToPrintOnPage() {
+            let newList = [];
             if(this.cast) {
-                console.log("array con la lista degli attori:", this.cast);
-                let newList = [];
                 for(let i = 0; i < 5; i++) {
-                    console.log("questo è l'attore di posto", i, this.cast[i]);
-                    newList.push(this.cast[i].original_name);
+                    if (this.cast[i]) {
+                        newList.push(this.cast[i].original_name);
+                    }
                 }
-                return newList;
-            } else {
-                return '';
             }
-            // let newList = [];
-            // for(let i = 0; i < 5; i++) {
-            //     console.log("array con la lista degli attori:", this.cast);
-            //     newList.push(this.cast[i].original_name);
-            // }
-            // return newList;
+            return newList;
         }
     },
     methods: {

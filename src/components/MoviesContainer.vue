@@ -23,6 +23,7 @@
                 :rating="series.vote_average"
                 :posterPath="series.poster_path"
                 :textOverview="series.overview"
+                :cast="series.castList"
             />
         </div>
     </div>
