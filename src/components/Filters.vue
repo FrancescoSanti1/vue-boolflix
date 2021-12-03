@@ -1,6 +1,17 @@
 <template>
     <aside>
         <ul>
+            <h3>Filtra per tipo</h3>
+            <li>
+                <input type="checkbox" id="checkMovies" v-model="showMovies" @change="$emit('checkMovies', showMovies)">
+                <label for="checkMovies">Film</label>
+            </li>
+            <li>
+                <input type="checkbox" id="checkSeries" v-model="showSeries" @change="$emit('checkSeries', showSeries)">
+                <label for="checkSeries">Serie tv</label>
+            </li>
+        </ul>
+        <ul>
             <h3>Filtra per generi</h3>
             <li v-for="genre in mergedGenresList" :key="genre.id">
                 <input type="checkbox" :id="genre.id" :value="genre.name" v-model="checkedGenres" @change="$emit('sendGenres', checkedGenres)">
@@ -19,7 +30,9 @@ export default {
         return {
             movieGenresList: [],
             seriesGenresList: [],
-            checkedGenres: []
+            checkedGenres: [],
+            showMovies: false,
+            showSeries: false
         }
     },
     computed: {

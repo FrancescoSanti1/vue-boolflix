@@ -12,6 +12,7 @@
             :textOverview="movie.overview"
             :cast="movie.castList"
             :genres="movie.genresList"
+            :checkboxType="showMovies"
         />
 
         <Item
@@ -26,6 +27,7 @@
             :textOverview="series.overview"
             :cast="series.castList"
             :genres="series.genresList"
+            :checkboxType="showSeries"
         />
     </div>
 </template>
@@ -41,7 +43,29 @@ export default {
     props: {
         moviesApiResponse: Array,
         seriesApiResponse: Array,
-        selectedGenres: Array
+        selectedGenres: Array,
+        checkboxMovies: Boolean,
+        checkboxSeries: Boolean
+    },
+    computed: {
+        showMovies() {
+            if(!this.checkboxMovies && !this.checkboxSeries) {
+                return true;
+            } else if(this.checkboxMovies) {
+                return true;
+            } else {
+                return false;
+            }
+        },
+        showSeries() {
+            if(!this.checkboxMovies && !this.checkboxSeries) {
+                return true;
+            } else if(this.checkboxSeries) {
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <div class="item" v-if="showItem">
+    <div class="item" v-if="showItem && checkboxType">
         <img class="poster" :src="imagePath" :alt="`locandina ${title}`">
         <div class="item-infos">
             <div><span class="bold">Titolo</span>: {{title}}</div>
@@ -40,7 +40,8 @@ export default {
         textOverview: String,
         cast: Array,
         genres: Array,
-        selectedGenres: Array
+        selectedGenres: Array,
+        checkboxType: Boolean,
     },
     computed: {
         ratingStars() {

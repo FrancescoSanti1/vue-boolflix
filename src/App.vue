@@ -6,11 +6,15 @@
         <main>
             <Filters
                 @sendGenres="updateGenres"
+                @checkMovies="updateCheckMovies"
+                @checkSeries="updateCheckSeries"
             />
             <MoviesContainer
                 :moviesApiResponse="moviesApiResponse"
                 :seriesApiResponse="seriesApiResponse"
                 :selectedGenres="selectedGenres"
+                :checkboxMovies="checkboxMovies"
+                :checkboxSeries="checkboxSeries"
             />
         </main>
     </div>
@@ -33,7 +37,9 @@ export default {
         return {
             moviesApiResponse: [],
             seriesApiResponse: [],
-            selectedGenres: []
+            selectedGenres: [],
+            checkboxMovies: false,
+            checkboxSeries: false
         }
     },
     methods: {
@@ -100,6 +106,12 @@ export default {
         },
         updateGenres(newList) {
             this.selectedGenres = newList;
+        },
+        updateCheckMovies(booleanValue) {
+            this.checkboxMovies = booleanValue;
+        },
+        updateCheckSeries(booleanValue) {
+            this.checkboxSeries = booleanValue;
         }
     }
 }
