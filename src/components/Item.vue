@@ -1,5 +1,5 @@
 <template>
-    <div class="item">
+    <div class="item" v-if="showItem">
         <img class="poster" :src="imagePath" :alt="`locandina ${title}`">
         <div class="item-infos">
             <div><span class="bold">Titolo</span>: {{title}}</div>
@@ -39,7 +39,8 @@ export default {
         posterPath: String,
         textOverview: String,
         cast: Array,
-        genres: Array
+        genres: Array,
+        selectedGenres: Array
     },
     computed: {
         ratingStars() {
@@ -69,6 +70,24 @@ export default {
                 }
             }
             return newList;
+        },
+        showItem() {
+            let foundItem = false;
+            if(this.selectedGenres.length === 0) {
+                return true;
+            } else {
+                this.selectedGenres.forEach(genre => {
+                
+                    let foundGenre = this.genres.find(elem => {
+                        return elem.name === genre;
+                    });
+
+                    if(foundGenre) {
+                        foundItem = true;
+                    }
+                });
+                return foundItem;
+            }
         }
     },
     methods: {

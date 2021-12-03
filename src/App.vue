@@ -4,9 +4,13 @@
             @searchString="callAxios"
         />
         <main>
+            <Filters
+                @sendGenres="updateGenres"
+            />
             <MoviesContainer
                 :moviesApiResponse="moviesApiResponse"
                 :seriesApiResponse="seriesApiResponse"
+                :selectedGenres="selectedGenres"
             />
         </main>
     </div>
@@ -14,6 +18,7 @@
 
 <script>
 import Header from './components/Header.vue'
+import Filters from './components/Filters.vue'
 import MoviesContainer from './components/MoviesContainer.vue'
 import axios from 'axios'
 
@@ -21,12 +26,14 @@ export default {
     name: 'App',
     components: {
       Header,
+      Filters,
       MoviesContainer
     },
     data() {
         return {
             moviesApiResponse: [],
             seriesApiResponse: [],
+            selectedGenres: []
         }
     },
     methods: {
@@ -90,6 +97,9 @@ export default {
                     //console.log(movie.title, movie.castList.map(item => item.original_name).join(', '));
                 }); 
             });
+        },
+        updateGenres(newList) {
+            this.selectedGenres = newList;
         }
     }
 }
@@ -106,5 +116,12 @@ export default {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+main {
+    display: flex;
+    min-height: calc(100vh - 80px);
+    background-color: grey;
+    padding: 30px 0;
 }
 </style>
