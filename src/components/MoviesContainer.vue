@@ -12,6 +12,7 @@
                 :posterPath="movie.poster_path"
                 :textOverview="movie.overview"
                 :cast="movie.castList"
+                :genres="movie.genresList"
             />
 
             <Item
@@ -24,6 +25,7 @@
                 :posterPath="series.poster_path"
                 :textOverview="series.overview"
                 :cast="series.castList"
+                :genres="series.genresList"
             />
         </div>
     </div>

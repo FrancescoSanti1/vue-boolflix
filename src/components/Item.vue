@@ -14,7 +14,11 @@
             </div>
             <div>
                 <span class="bold">Cast</span>:
-                <span v-for="actor in castToPrintOnPage" :key="actor">{{actor}} </span>
+                <span class="actor" v-for="actor in castToPrintOnPage" :key="actor">{{actor}}</span>
+            </div>
+            <div>
+                <span class="bold">Genere</span>:
+                <span class="genre" v-for="genre in genres" :key="genre.id">{{genre.name}}</span>
             </div>
             <div>
                 <span class="bold">Trama</span>:
@@ -34,7 +38,8 @@ export default {
         rating: Number,
         posterPath: String,
         textOverview: String,
-        cast: Array
+        cast: Array,
+        genres: Array
     },
     computed: {
         ratingStars() {
@@ -141,6 +146,14 @@ export default {
             &.active {
                 background-color: gold;
             }
+        }
+
+        .actor::after, .genre::after {
+            content: ", ";
+        }
+
+        .actor:last-of-type::after, .genre:last-of-type::after {
+            content: ".";
         }
     }  
 }

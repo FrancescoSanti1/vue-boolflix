@@ -37,7 +37,7 @@ export default {
             .then(response => {
                 this.moviesApiResponse = response.data.results;
                 // una volta popolato l'array con i film trovati, invoco la funzione per chiedere la lista degli attori
-                this.searchMovieCast();
+                this.searchMovieCastAndGenres();
             });
 
             axios
@@ -45,12 +45,12 @@ export default {
             .then(response => {
                 this.seriesApiResponse = response.data.results;
                 // una volta popolato l'array con le serie tv trovate, invoco la funzione per chiedere la lista degli attori
-                this.searchSeriesCast();
+                this.searchSeriesCastAndGenres();
             });
         },
-        searchMovieCast() {
+        searchMovieCastAndGenres() {
             this.moviesApiResponse.forEach(movie => {
-                
+                // richiesta per avere il cast del film
                 axios
                 .get(`https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=f98ea4f4b78ab3a6de36168ebf417712`)
                 .then(response => {
@@ -59,15 +59,36 @@ export default {
                     this.$set(movie, 'castList', response.data.cast);
                     //console.log(movie.title, movie.castList.map(item => item.original_name).join(', '));
                 }); 
+
+                // richiesta per avere i generi del film
+                axios
+                .get(`https://api.themoviedb.org/3/movie/${movie.id}?api_key=f98ea4f4b78ab3a6de36168ebf417712`)
+                .then(response => {
+                    
+                    // movie.castList = response.data.cast;
+                    this.$set(movie, 'genresList', response.data.genres);
+                    //console.log(movie.title, movie.castList.map(item => item.original_name).join(', '));
+                }); 
             });
         },
-        searchSeriesCast() {
+        searchSeriesCastAndGenres() {
             this.seriesApiResponse.forEach(series => {
+                // richiesta per avere il cast della serie
                 axios
                 .get(`https://api.themoviedb.org/3/tv/${series.id}/credits?api_key=f98ea4f4b78ab3a6de36168ebf417712`)
                 .then(response => {
                     this.$set(series, 'castList', response.data.cast);
                 });
+
+                // richiesta per avere i generi della serie
+                axios
+                .get(`https://api.themoviedb.org/3/tv/${series.id}?api_key=f98ea4f4b78ab3a6de36168ebf417712`)
+                .then(response => {
+                    
+                    // movie.castList = response.data.cast;
+                    this.$set(series, 'genresList', response.data.genres);
+                    //console.log(movie.title, movie.castList.map(item => item.original_name).join(', '));
+                }); 
             });
         }
     }
